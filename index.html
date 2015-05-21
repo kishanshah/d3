@@ -3,17 +3,40 @@
     <head>
         <meta charset="utf-8">
         <title>D3 Test</title>
-        <script type="text/javascript" src="javascripts/d3.js"></script>
-    </head>
-    <body>
-        <script type="text/javascript">
-            var dataset = [ 5, 10, 15, 20, 25 ];
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="http://dimplejs.org/dist/dimple.v2.1.2.min.js"></script>
+    <head>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.1.2.min.js"></script>
+</head>
+<body>
+  <div id="chartContainer"></div>      
+  <button id="btn">Click Me</button>
 
-            d3.select("body").selectAll("p")
-                .data(dataset)
-                .enter()
-                .append("p")
-                .text(function(d) { return d; });
-        </script>
-    </body>
+  <script type="text/javascript">
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    var data = [
+        { Developer: "jlass6688", Value: (Math.random() * 1000000) },
+        { Developer: "thehaymaker", Value: (Math.random() * 1000000) },
+        { Developer: "kishanshah", Value: (Math.random() * 1000000) }
+    ];
+    var myChart = new dimple.chart(svg, data);
+    myChart.setBounds(60, 30, 510, 305)
+    var x = myChart.addCategoryAxis("x", "Developer");
+    x.addOrderRule(["jlass6688", "thehaymaker", "kishanshah"]);
+    myChart.addMeasureAxis("y", "Value");
+    myChart.addSeries(null, dimple.plot.bar);
+    myChart.draw();
+
+    d3.select("#btn").on("click", function() {
+       myChart.data = [
+         { Developer: "jlass6688", Value: (Math.random() * 1000000) },
+         { Developer: "thehaymaker", Value: (Math.random() * 1000000) },
+         { Developer: "kishanshah", Value: (Math.random() * 1000000) }
+       ];
+       myChart.draw(1000);
+    });
+  </script>
+  
+</body>
 </html>
